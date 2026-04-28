@@ -3,10 +3,7 @@
 Aplikasi pengelolaan arsip digital berbasis web menggunakan stack **PERN/M** (MySQL, Express, React, Node.js). Project ini dirancang untuk memudahkan penyimpanan dan manajemen dokumen secara digital.
 
 ##  Fitur Saat Ini
-- Autentikasi User: Register & Login dengan enkripsi password (Bcrypt).
-- Validasi Input: Pengecekan karakter minimal dan keamanan data.
-- RESTful API: Struktur folder yang rapi dengan pola MVC (Model-View-Controller).
-- Database Relasional: Menggunakan MySQL untuk penyimpanan data user dan dokumen.
+- masih set up belum ada ada perubahan besar
 
 ##  Tech Stack
 - Frontend: React.js, Vite, Tailwind CSS.
