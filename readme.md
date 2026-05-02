@@ -1,78 +1,22 @@
-Sistem Informasi E-Arsip Digital
-Sistem manajemen arsip berbasis web yang dirancang untuk mempermudah pendataan, penyimpanan, dan verifikasi dokumen secara digital. Sistem ini mendukung manajemen berbasis peran (RBAC) untuk memastikan keamanan data sesuai dengan kewenangan pengguna.
-
-Fitur Utama
-Autentikasi & Otorisasi: Login berbasis JWT dengan pembagian peran (Admin, Kepala Dinas, Sekretaris, Staff TU, Verifikator, Arsiparis, dan Viewer).
-
-Manajemen User: Pengelolaan data pengguna aplikasi khusus untuk peran Admin.
-
-Unggah Arsip: Fitur unggah dokumen dengan validasi peran tertentu.
-
-Verifikasi Dokumen: Alur kerja verifikasi arsip sebelum dianggap sah di dalam sistem.
-
-Pencarian & Detail: Memudahkan pencarian dokumen dan melihat detail metadata arsip secara lengkap.
-
-Teknologi yang Digunakan
-Frontend
-React.js: Library utama untuk pembangunan antarmuka.
-
-Vite: Build tool untuk performa pengembangan yang cepat.
-
-Tailwind CSS: Framework CSS untuk styling yang responsif.
-
-React Router Dom: Manajemen navigasi dan routing aplikasi.
-
-Backend
-Node.js & Express.js: Perangkat lunak sisi server.
-
-MySQL: Sistem manajemen basis data relasional.
-
-Multer: Middleware untuk penanganan unggahan file.
-
-Struktur Folder
-Plaintext
-E-ARSIP/
-├── backend/            # API Server (Express.js)
-│   ├── connection/     # Konfigurasi database
-│   ├── controllers/    # Logika bisnis
-│   ├── middleware/     # Auth, Role, dan Upload middleware
-│   └── routes/         # Definisi endpoint API
-└── frontend/           # Interface (React.js)
+E-Arsip Digital SystemSistem Informasi Manajemen Arsip berbasis web yang mengimplementasikan Role-Based Access Control (RBAC) untuk otomatisasi birokrasi dan pengelolaan dokumen digital secara aman. Tech StackLayerTechnologyUsageFrontendReact + ViteUI & Client LogicStylingTailwind CSSResponsive DesignBackendExpress.jsREST API ServerDatabaseMySQLRelational StorageSecurityJWTAuthenticationFilesMulterFile Handling Project StructureBashE-ARSIP/
+├── backend/                # API Server Engine
+│   ├── controllers/        # Logic handlers
+│   ├── middleware/         # Auth & Role validation
+│   └── routes/             # API Endpoints
+└── frontend/               # Client Application
     ├── src/
-    │   ├── api/        # Konfigurasi Fetch API (diabaikan oleh git)
-    │   ├── components/ # Komponen reusable (Navbar, Sidebar, UI)
-    │   ├── context/    # State management (AuthContext)
-    │   └── pages/      # Halaman utama dan Admin sub-folder
-Persiapan Instalasi
-1. Prasyarat
-Node.js terinstal di komputer.
-
-MySQL terinstal dan sedang berjalan.
-
-2. Konfigurasi Backend
-Masuk ke folder backend: cd backend
-
-Instal dependensi: npm install
-
-Buat file .env dan sesuaikan konfigurasi database:
-
-Cuplikan kode
-DB_HOST=localhost
+    │   ├── api/            # API Service Layer (Ignored)
+    │   ├── context/        # Auth State Provider
+    │   ├── components/     # UI Library (Badge, Navbar, Sidebar)
+    │   └── pages/          # View Layers & Admin Panels
+ Quick Start1. Database SetupImpor skema basis data e_arsip.sql ke MySQL server kamu.2. Backend ConfigurationMasuk ke direktori backend dan instalasi modul:Bashcd backend
+npm install
+Konfigurasi .env (Jangan di-push ke GitHub!):Cuplikan kodeDB_HOST=localhost
 DB_USER=root
-DB_PASS=
+DB_PASS=yourpassword
 DB_NAME=e_arsip
-JWT_SECRET=rahasia_negara
-Jalankan server: npm run dev
-
-3. Konfigurasi Frontend
-Masuk ke folder frontend: cd frontend
-
-Instal dependensi: npm install
-
-Buat file src/api/fetch.js berdasarkan template yang tersedia.
-
-Jalankan aplikasi: npm run dev
-
-Keamanan Data
-Folder src/api/ pada bagian frontend dan file .env pada bagian backend telah didaftarkan ke dalam .gitignore untuk mencegah kebocoran kredensial atau konfigurasi server ke repositori publik.
-Dibuat oleh Teguh Mediansyah dan kawankawn
+JWT_SECRET=supersecretkey
+3. Frontend ConfigurationMasuk ke direktori frontend dan instalasi modul:Bashcd frontend
+npm install
+Jalankan aplikasi:Bashnpm run dev
+ Security PolicyResourceProtection LevelDescriptionsrc/api/HighHidden via .gitignore. Contains endpoint logic..envCriticalHidden via .gitignore. Contains DB Credentials.node_modules/StandardIgnored. Dependency-only.ContributorsTeguh Mediansyah - Lead Developer
