@@ -1,43 +1,78 @@
-#  E-Arsip Project
+Sistem Informasi E-Arsip Digital
+Sistem manajemen arsip berbasis web yang dirancang untuk mempermudah pendataan, penyimpanan, dan verifikasi dokumen secara digital. Sistem ini mendukung manajemen berbasis peran (RBAC) untuk memastikan keamanan data sesuai dengan kewenangan pengguna.
 
-Aplikasi pengelolaan arsip digital berbasis web menggunakan stack **PERN/M** (MySQL, Express, React, Node.js). Project ini dirancang untuk memudahkan penyimpanan dan manajemen dokumen secara digital.
+Fitur Utama
+Autentikasi & Otorisasi: Login berbasis JWT dengan pembagian peran (Admin, Kepala Dinas, Sekretaris, Staff TU, Verifikator, Arsiparis, dan Viewer).
 
-##  Fitur Saat Ini
-- masih set up belum ada ada perubahan besar
+Manajemen User: Pengelolaan data pengguna aplikasi khusus untuk peran Admin.
 
-##  Tech Stack
-- Frontend: React.js, Vite, Tailwind CSS.
-- Backend: Node.js, Express.js.
-- Database: MySQL.
-- Tools: Nodemon, Axios, Bcrypt, Dotenv, Cors.
+Unggah Arsip: Fitur unggah dokumen dengan validasi peran tertentu.
 
----
+Verifikasi Dokumen: Alur kerja verifikasi arsip sebelum dianggap sah di dalam sistem.
 
-## ⚙️ Persiapan Instalasi
+Pencarian & Detail: Memudahkan pencarian dokumen dan melihat detail metadata arsip secara lengkap.
 
-Pastikan kamu sudah menginstal [Node.js](https://nodejs.org/) dan [MySQL](https://www.mysql.com/).
+Teknologi yang Digunakan
+Frontend
+React.js: Library utama untuk pembangunan antarmuka.
 
-### 1. Clone Repository
-```bash
-git clone [https://github.com/username/e-arsip.git](https://github.com/username/e-arsip.git)
-cd e-arsip
-2. Setup BackendMasuk ke folder backend dan instal semua library yang dibutuhkan:Bashcd backend
-npm install
-3. Konfigurasi Database (.env)Buat file bernama .env di dalam folder backend dan isi dengan konfigurasi database kamu:Cuplikan kodeDB_HOST=localhost
+Vite: Build tool untuk performa pengembangan yang cepat.
+
+Tailwind CSS: Framework CSS untuk styling yang responsif.
+
+React Router Dom: Manajemen navigasi dan routing aplikasi.
+
+Backend
+Node.js & Express.js: Perangkat lunak sisi server.
+
+MySQL: Sistem manajemen basis data relasional.
+
+Multer: Middleware untuk penanganan unggahan file.
+
+Struktur Folder
+Plaintext
+E-ARSIP/
+├── backend/            # API Server (Express.js)
+│   ├── connection/     # Konfigurasi database
+│   ├── controllers/    # Logika bisnis
+│   ├── middleware/     # Auth, Role, dan Upload middleware
+│   └── routes/         # Definisi endpoint API
+└── frontend/           # Interface (React.js)
+    ├── src/
+    │   ├── api/        # Konfigurasi Fetch API (diabaikan oleh git)
+    │   ├── components/ # Komponen reusable (Navbar, Sidebar, UI)
+    │   ├── context/    # State management (AuthContext)
+    │   └── pages/      # Halaman utama dan Admin sub-folder
+Persiapan Instalasi
+1. Prasyarat
+Node.js terinstal di komputer.
+
+MySQL terinstal dan sedang berjalan.
+
+2. Konfigurasi Backend
+Masuk ke folder backend: cd backend
+
+Instal dependensi: npm install
+
+Buat file .env dan sesuaikan konfigurasi database:
+
+Cuplikan kode
+DB_HOST=localhost
 DB_USER=root
-DB_PASSWORD=
+DB_PASS=
 DB_NAME=e_arsip
-PORT=3000
-4. Jalankan Server (Development)Gunakan nodemon agar server otomatis restart saat ada perubahan kode:Bashnpm run dev
-Server akan berjalan di: http://localhost:3000📂 Struktur FolderPlaintextE-ARSIP/
-├── backend/
-│   ├── connection/      # Konfigurasi database (db.js)
-│   ├── controllers/     # Logika bisnis (userController.js)
-│   ├── routes/          # Alur URL API (userRoutes.js)
-│   ├── middleware/      # Keamanan & validasi (authMiddleware.js)
-│   ├── uploads/         # Folder penyimpanan file arsip
-│   └── app.js           # Entry point utama server
-├── frontend/            # Folder aplikasi React (Vite)
-└── README.md
+JWT_SECRET=rahasia_negara
+Jalankan server: npm run dev
 
-📡 API Endpoints (V1)AuthMethodEndpointFungsiPOST/api/v1/users/registerMendaftarkan pengguna baruPOST/api/v1/users/loginMasuk ke aplikasiGET/api/v1/users/Melihat semua daftar pengguna🤝 KontribusiJika ingin berkontribusi, silakan lakukan fork pada repository ini dan gunakan pull request. Segala bentuk saran dan perbaikan sangat dihargai!Dibuat oleh Teguh Mediansyah
+3. Konfigurasi Frontend
+Masuk ke folder frontend: cd frontend
+
+Instal dependensi: npm install
+
+Buat file src/api/fetch.js berdasarkan template yang tersedia.
+
+Jalankan aplikasi: npm run dev
+
+Keamanan Data
+Folder src/api/ pada bagian frontend dan file .env pada bagian backend telah didaftarkan ke dalam .gitignore untuk mencegah kebocoran kredensial atau konfigurasi server ke repositori publik.
+Dibuat oleh Teguh Mediansyah dan kawankawn
