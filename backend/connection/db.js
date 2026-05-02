@@ -1,5 +1,5 @@
-require('dotenv').config();
 const mysql = require('mysql2');
+require('dotenv').config();
 
 const pool = mysql.createPool({
   host: process.env.DB_HOST,
@@ -7,10 +7,18 @@ const pool = mysql.createPool({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   waitForConnections: true,
-  connectionLimit: process.env.DB_CONN_LIMIT || 10,
-  queueLimit: 0
+  connectionLimit: process.env.DB_CONN_LIMIT || 15,
+  queueLimit: 0,
+  charset: "utf8mb4"
 });
 
-const db = pool.promise();
+pool.getConnection((err, connection) => {
+  if (err) {
+    console.error(" Gagal konek:", err.message);
+    process.exit(1);
+  }
+  console.log("Database terhubung");
+  connection.release();
+});
 
-module.exports = db;
+module.exports = pool.promise();

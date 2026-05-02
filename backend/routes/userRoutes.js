@@ -2,15 +2,12 @@
 // Isinya cuma daftar alamat atau endpoint (misal: /login larinya ke mana, /register larinya ke mana).
 // anjay baru tau kalo manggil endpointnya itu lewat variabel awalnya
 
-const express = require("express");
-const router = express.Router();
-const userControllers = require("../controllers/userControllers");
+const router = require("express").Router();
+const { login, getProfile, updateProfile } = require("../controllers/userController");
+const authMiddleware  = require("../middleware/authMiddleware");
 
-router.get("/", userControllers.getAllUsers);
-
-// Alamat: POST /api/v1/users/register
-// Alamat: POST /api/v1/users/login
-router.post("/register", userControllers.registerUser);
-router.post("/login", userControllers.loginUser);
+router.post("/login", login);
+router.get("/profile", authMiddleware, getProfile);
+router.put("/profile", authMiddleware, updateProfile);
 
 module.exports = router;

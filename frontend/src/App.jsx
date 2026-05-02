@@ -1,122 +1,69 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
+import { ProtectedRoute } from "./components/Layout";
 
-function App() {
-  const [count, setCount] = useState(0)
+// Halaman publik
+import Login from "./pages/Login";
 
-  return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+// Halaman staff (Sekarang ada di folder pages langsung)
+import Dashboard   from "./pages/Dashboard";
+import ArsipList   from "./pages/ArsipList";
+import ArsipDetail from "./pages/ArsipDetail";
+import UploadArsip from "./pages/UploadArsip";
+import Profile     from "./pages/Profile";
 
-      <div className="ticks"></div>
+// Halaman admin (Ada di dalam sub-folder admin)
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import ManageUsers    from "./pages/admin/ManageUsers";
+import CreateUser     from "./pages/admin/CreateUser";
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+// ... sisa kode STAFF_ROLES dan App component tetap sama
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
-}
+// Role yang boleh masuk ke halaman staff (semua kecuali admin)
+const STAFF_ROLES = ["kepala_dinas", "sekretaris", "staff_tu", "verifikator", "arsiparis", "viewer"];
+const CAN_UPLOAD  = ["sekretaris", "staff_tu", "arsiparis"];
 
-export default App
+const App = () => (
+  <AuthProvider>
+    <BrowserRouter>
+      <Routes>
+        {/* Publik */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/"      element={<Navigate to="/login" replace />} />
+
+        {/* Staff */}
+        <Route path="/dashboard" element={
+          <ProtectedRoute allowedRoles={STAFF_ROLES}><Dashboard /></ProtectedRoute>
+        } />
+        <Route path="/arsip" element={
+          <ProtectedRoute allowedRoles={STAFF_ROLES}><ArsipList /></ProtectedRoute>
+        } />
+        <Route path="/arsip/:id" element={
+          <ProtectedRoute allowedRoles={STAFF_ROLES}><ArsipDetail /></ProtectedRoute>
+        } />
+        <Route path="/arsip/upload" element={
+          <ProtectedRoute allowedRoles={CAN_UPLOAD}><UploadArsip /></ProtectedRoute>
+        } />
+        <Route path="/profile" element={
+          <ProtectedRoute allowedRoles={STAFF_ROLES}><Profile /></ProtectedRoute>
+        } />
+
+        {/* Admin */}
+        <Route path="/admin" element={
+          <ProtectedRoute allowedRoles={["admin"]}><AdminDashboard /></ProtectedRoute>
+        } />
+        <Route path="/admin/users" element={
+          <ProtectedRoute allowedRoles={["admin"]}><ManageUsers /></ProtectedRoute>
+        } />
+        <Route path="/admin/users/create" element={
+          <ProtectedRoute allowedRoles={["admin"]}><CreateUser /></ProtectedRoute>
+        } />
+
+        {/* Fallback */}
+        <Route path="*" element={<Navigate to="/login" replace />} />
+      </Routes>
+    </BrowserRouter>
+  </AuthProvider>
+);
+
+export default App;
